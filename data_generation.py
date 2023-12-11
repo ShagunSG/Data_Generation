@@ -27,7 +27,7 @@ for i in range (int(numberOfJobs)):
   machiningSequence.append(buffer)
 
 def completionTime(jobID, sequenceNumber):
-  time = np.random.normal(loc=machiningSequence[jobID][sequenceNumber][1],scale=machiningSequence[jobID][sequenceNumber][2])
+  time = np.random.normal(loc=machiningSequence[jobID][sequenceNumber][1],scale=0.0)
   return time
 
 lockList = []
@@ -62,20 +62,20 @@ time_elapsed = []
 
 def entity(jobID, buffer):
   while(len(buffer)):
-    product_id.append(jobID + 1)
     item = buffer.popleft()
-    entity_id.append(item[0] + 1)
     with lockList[item[0]]:
       print(f"Entity {item[0] + 1} started consuming item {jobID + 1}")
       iniTime = time.time()
       sleep(item[1])
-      finTime = time.time()
+      finTime = iniTime + item[1]
       print(f"Entity {item[0] + 1} finished consuming item {jobID + 1}")
       end_time.append(finTime)
       start_time.append(iniTime)
       TimeElapsed = (finTime-iniTime)
       print(TimeElapsed)
       time_elapsed.append(TimeElapsed)
+      product_id.append(jobID + 1)
+      entity_id.append(item[0] + 1)
 
 
 # Create and start consumer threads
