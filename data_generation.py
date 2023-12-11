@@ -97,7 +97,11 @@ data = pd.DataFrame(list_data, columns = ['Entity ID', 'Product ID', 'Start Time
 
 data
 
-dataToExcel = pd.ExcelWriter('Generated_Data.xlsx')
-data.to_excel(dataToExcel)
+csvData = data.to_csv(index=False)
 
-dataToExcel.save()
+csvFilePath = 'data.csv'
+
+with open(csvFilePath, 'w') as file:
+  file.write(csvData)
+  
+print(f'DataFrame has been saved to {csvFilePath}')
